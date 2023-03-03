@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+
+<body>
+    <input type="text" id="link" />
+    <button id="btn" onclick="download()">Download</button>
+    <script>
+
+        let filename = null;
+
+        async function downloadAudio(link) {
+            const response = await fetch('http://localhost:8000/download', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ link })
+            });
+
+
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+
+            filename = response.headers.get('Content-Disposition') ?? 'Test file.mp3';
+
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        const download = () => {
+            let link = document.getElementById('link').value;
+            downloadAudio(link);
+        };
+    </script>
+</body>
+
+</html>
