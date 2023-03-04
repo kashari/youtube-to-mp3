@@ -37,7 +37,9 @@ async def download_video(video_info: VideoInfo) -> FileResponse:
 
     os.remove('./audios/' + video_stream.default_filename)
     file_path = './audios/' + video_stream.default_filename[:-4] + ".mp3"
-    return FileResponse(file_path, media_type='audio/mpeg', filename=video_stream.default_filename[:-4] + ".mp3")
+    headers = {'Access-Control-Expose-Headers': 'Content-Disposition'}
+    return FileResponse(file_path, media_type='audio/mpeg', filename=video_stream.default_filename[:-4] + ".mp3",
+                        headers=headers)
 
 
 # every 5 minutes empty the directory save server space...
