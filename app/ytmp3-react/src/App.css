@@ -1,0 +1,8 @@
+.container {
+    font-family: 'Poppins', sans-serif;
+    display: block;
+    justify-content: center;
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+}

@@ -1,14 +1,24 @@
 version: '3.9'
 
 services:
-  web:
+  fastapi:
     build:
-      context: ./app
-      dockerfile: ../docker/Dockerfile
+      context: ./app/fastapi
+      dockerfile: ../../docker/Dockerfile-FastAPI
     ports:
       - "8000:8000"
     volumes:
-      - ./app:/usr/src/app
+      - ./app/fastapi:/usr/src/app/fastapi
+    networks:
+      - app-network
+  react:
+    build:
+      context: ./app/ytmp3-react
+      dockerfile: ../../docker/Dockerfile-React
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/ytmp3-react:/usr/src/app/ytmp3-react
     networks:
       - app-network
   db:
@@ -18,7 +28,6 @@ services:
     volumes:
       - /var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
     environment:
       - MYSQL_DATABASE=test
       - MYSQL_PASSWORD=root

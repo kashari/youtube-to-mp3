@@ -29,7 +29,7 @@ async def download_video(video_info: VideoInfo) -> FileResponse:
 
     video = YouTube(url)
     video_stream = video.streams.get_highest_resolution()
-    video_stream.download(output_path='./audios/')
+    video_stream.download(output_path='audios/')
 
     video_file = VideoFileClip('./audios/' + video_stream.default_filename)
     audio_file = video_file.audio
@@ -46,6 +46,9 @@ async def download_video(video_info: VideoInfo) -> FileResponse:
 @app.on_event("startup")
 @repeat_every(seconds=60 * 5)
 def clear_dir() -> None:
+    """
+    This method clears the directory where the audio files are stored.
+    """
     print('Deleting all files inside the ./audios/ directory.')
     folder = './audios'
     for filename in os.listdir(folder):
