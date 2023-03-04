@@ -23,9 +23,13 @@ class VideoInfo(BaseModel):
     link: str
 
 
-@app.post("/download")
-async def download_video(video_info: VideoInfo) -> FileResponse:
-    url = video_info.link
+class AudioInfo(BaseModel):
+    link: str
+
+
+@app.post("/download-mp3")
+async def download_audio(audio_info: AudioInfo) -> FileResponse:
+    url = audio_info.link
 
     video = YouTube(url)
     video_stream = video.streams.get_highest_resolution()
@@ -39,6 +43,20 @@ async def download_video(video_info: VideoInfo) -> FileResponse:
     file_path = './audios/' + video_stream.default_filename[:-4] + ".mp3"
     headers = {'Access-Control-Expose-Headers': 'Content-Disposition'}
     return FileResponse(file_path, media_type='audio/mpeg', filename=video_stream.default_filename[:-4] + ".mp3",
+                        headers=headers)
+
+
+@app.post("/download-mp4")
+async def download_video(video_info: VideoInfo) -> FileResponse:
+    url = video_info.link
+
+    video = YouTube(url)
+    video_stream = video.streams.get_highest_resolution()
+    video_stream.download(output_path='audios/')
+
+    file_path = './audios/' + video_stream.default_filename
+    headers = {'Access-Control-Expose-Headers': 'Content-Disposition'}
+    return FileResponse(file_path, media_type='audio/mpeg', filename=video_stream.default_filename,
                         headers=headers)
 
 
