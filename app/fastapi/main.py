@@ -56,7 +56,7 @@ async def download_video(video_info: VideoInfo) -> FileResponse:
 
     file_path = './audios/' + video_stream.default_filename
     headers = {'Access-Control-Expose-Headers': 'Content-Disposition'}
-    return FileResponse(file_path, media_type='audio/mpeg', filename=video_stream.default_filename,
+    return FileResponse(file_path, media_type='video/mp4', filename=video_stream.default_filename,
                         headers=headers)
 
 
@@ -65,7 +65,7 @@ async def download_video(video_info: VideoInfo) -> FileResponse:
 @repeat_every(seconds=60 * 5)
 def clear_dir() -> None:
     """
-    This method clears the directory where the audio files are stored.
+    This function clears the directory where the audio/video files are stored.
     """
     print('Deleting all files inside the ./audios/ directory.')
     folder = './audios'

@@ -90,18 +90,18 @@ const App = () => {
                         aria-label="outlined primary button group"
                     >
                         <Button
-                            style={{height: '100%', borderRadius: '0', marginRight: '5px'}}
-                            variant={downloadType === 'mp4' ? 'contained' : 'outlined'}
-                            onClick={() => handleDownloadTypeClick('mp4')}
-                        >
-                            MP4
-                        </Button>
-                        <Button
                             style={{height: '100%', borderRadius: '0'}}
                             variant={downloadType === 'mp3' ? 'contained' : 'outlined'}
                             onClick={() => handleDownloadTypeClick('mp3')}
                         >
                             MP3
+                        </Button>
+                        <Button
+                            style={{height: '100%', borderRadius: '0', marginRight: '5px'}}
+                            variant={downloadType === 'mp4' ? 'contained' : 'outlined'}
+                            onClick={() => handleDownloadTypeClick('mp4')}
+                        >
+                            MP4
                         </Button>
                     </ButtonGroup>
                     <Button
